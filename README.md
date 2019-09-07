@@ -39,3 +39,19 @@ BEGIN
     );
 END
 ```
+
+178. Rank Scores
+
+Write a SQL query to rank scores. If there is a tie between two scores, both should have the same ranking. Note that after a tie, the next ranking number should be the next consecutive integer value. In other words, there should be no "holes" between ranks
+```sql
+SELECT Score, DENSE_RANK() OVER(ORDER BY Score DESC) Rank
+FROM Scores;
+```
+
+180. Consecutive Numbers
+Write a SQL query to find all numbers that appear at least three times consecutively.
+```sql
+SELECT DISTINCT l1.Num AS ConsecutiveNums
+FROM Logs l1, Logs l2, Logs l3
+WHERE l1.Id = l2.Id + 1 AND l2.Id = l3.Id+1 AND l1.Id = l3.Id+2 AND l1.Num = l2.Num AND l1.Num = l3.Num AND l2.Num = l3.Num;
+```
