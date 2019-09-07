@@ -3,17 +3,8 @@
 
 1.	getNthHighestSalary
 
-> CREATE FUNCTION getNthHighestSalary(@N INT) RETURNS INT AS
-> BEGIN
->     RETURN (
->         /* Write your T-SQL query statement below. */
->        SELECT (
->             SELECT Salary 
->             FROM Employee
->             ORDER BY Salary DESC
->             OFFSET @N-1 ROWS
->             FETCH NEXT 1 ROWS ONLY
->         )
->     );
-> END
+/* Write your T-SQL query statement below */
+SELECT Person.FirstName, Person.LastName, Address.City, Address.State
+FROM Person LEFT JOIN Address 
+ON Person.PersonId = Address.PersonId;
 
