@@ -55,3 +55,32 @@ SELECT DISTINCT l1.Num AS ConsecutiveNums
 FROM Logs l1, Logs l2, Logs l3
 WHERE l1.Id = l2.Id + 1 AND l2.Id = l3.Id+1 AND l1.Id = l3.Id+2 AND l1.Num = l2.Num AND l1.Num = l3.Num AND l2.Num = l3.Num;
 ```
+
+181. Employees Earning More Than Their Managers
+The Employee table holds all employees including their managers. Every employee has an Id, and there is also a column for the manager Id.
+Given the Employee table, write a SQL query that finds out employees who earn more than their managers. For the above table, Joe is the only employee who earns more than his manager.
+```sql
+/* Write your T-SQL query statement below */
+SELECT e1.Name AS Employee
+FROM Employee e1, Employee m1
+WHERE e1.ManagerId = m1.Id AND e1.Salary > m1.Salary;
+```
+
+182. Duplicate Emails
+Write a SQL query to find all duplicate emails in a table named Person.
+```sql
+SELECT DISTINCT e1.Email
+FROM Person e1, Person e2
+WHERE e1.Id <> e2.Id AND e1.Email = e2.Email;
+```
+
+183. Customers Who Never Order
+Suppose that a website contains two tables, the Customers table and the Orders table. Write a SQL query to find all customers who never order anything.
+```sql
+/* Write your T-SQL query statement below */
+SELECT c.Name Customers
+FROM Customers c
+WHERE c.Id NOT IN (SELECT o.CustomerId FROM orders o);
+```
+
+
