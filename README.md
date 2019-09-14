@@ -131,13 +131,70 @@ A country is big if it has an area of bigger than 3 million square km or a popul
 Write a SQL solution to output big countries' name, population and area.
 ```sql
 /* Write your T-SQL query statement below */
-SELECT name,population,area
-FROM
-(
-SELECT *
+SELECT name, population, area
 FROM World
-WHERE area > 3000000 OR population > 25000000
-)a
+WHERE population > 25000000 OR area > 3000000;
 ```
 
+596. Classes More Than 5 Students
+There is a table courses with columns: student and class  
+Please list out all classes which have more than or equal to 5 students.
+```sql
+/* Write your T-SQL query statement below */
+SELECT c.class
+FROM (SELECT class, COUNT(DISTINCT student) cnt FROM courses GROUP BY class) c
+WHERE c.cnt >= 5;
+```
+
+601. Human Traffic of Stadium
+X city built a new stadium, each day many people visit it and the stats are saved as these columns: id, visit_date, people  
+Please write a query to display the records which have 3 or more consecutive rows and the amount of people more than 100(inclusive).  
+```sql
+SELECT DISTINCT s1.*, ROW_NUMBER() OVER(ORDER BY s1.VISIT_DATE)
+FROM stadium s1, stadium s2, stadium s3
+WHERE (s1.people >= 100 AND s2.people >= 100 AND s3.people >= 100) AND
+                         ((s1.id = s2.id + 1 AND s1.id = s3.id + 2) OR
+                         (s2.id = s1.id + 1 AND s2.id = s3.id + 2) OR
+                         (s3.id = s2.id + 1 AND s3.id = s1.id + 2));
+```
+
+620. Not Boring Movies
+X city opened a new cinema, many people would like to go to this cinema. The cinema also gives out a poster indicating the movies’ ratings and descriptions.   
+Please write a SQL query to output movies with an odd numbered ID and a description that is not 'boring'. Order the result by rating.
+```sql
+SELECT *
+FROM cinema
+WHERE id % 2 =1 AND description <> 'boring'
+ORDER BY rating DESC;
+```
+
+626. Exchange Seats
+Mary is a teacher in a middle school and she has a table seat storing students' names and their corresponding seat ids.  
+The column id is continuous increment.  
+  
+Mary wants to change seats for the adjacent students.   
+ 
+Can you write a SQL query to output the result for Mary?   
+```sql
+/* Write your T-SQL query statement below */
+SELECT (CASE WHEN id % 2 = 1 AND id <> seatcnt THEN id+1
+             WHEN id % 2 = 1 AND id = seatcnt THEN id
+             ELSE id-1
+       END) id,student
+FROM seat,(SELECT COUNT(*) seatcnt  FROM seat) seat2
+ORDER BY id;
+```
+
+627. Swap Salary
+
+Given a table salary, such as the one below, that has m=male and f=female values. Swap all f and m values (i.e., change all f values to m and vice versa) with a single update statement and no intermediate temp table.  
+Note that you must write a single update statement, DO NOT write any select statement for this problem.  
+```sql
+UPDATE salary
+SET
+    sex = CASE sex
+        WHEN 'm' THEN 'f'
+        ELSE 'm'
+    END;
+```
 
